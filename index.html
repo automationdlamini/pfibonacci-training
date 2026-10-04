@@ -3,112 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Computer basics for T2000/T3000 Control System Quiz</title>
+    <title>Pfibonacci Industrial Training Platform — Technical LMS for Automation & Control Systems</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-<a href="https://www.pfibonacci.com">
-    ← Back to Pfibonacci
-</a>
-    <div class="quiz-container">
-        <header class="logo-header">
-            <img src="pfibinaaci-logo.png" alt="pfibonacci Logo" class="logo">
-            <p class="training-subtitle">C&I Engineering Solutions</p>
-        </header>
 
-        <!-- Landing Screen -->
-        <div id="landing-screen" class="screen">
-            <h1> Computer Systems Fundamentals</h1>
-            <p class="subtitle">Modular Training quiz for computer basic for Siemens T2000 Systems.</p>
-            <button id="start-btn" class="btn primary-btn">Start Training</button>
-        </div>
-
-        <!-- Module Selection Screen -->
-        <div id="module-screen" class="screen hidden">
-            <h1>Select a Module</h1>
-            <p class="subtitle">Complete all modules to test your basic skills.</p>
-            <div id="module-grid" class="module-grid">
-                <!-- Modules injected by JS -->
+    <!-- Global Header Navigation -->
+    <header class="global-header">
+        <div class="brand-container">
+            <div class="logo-header">
+                <img src="pfibinaaci-logo.png" alt="Pfibonacci Logo">
             </div>
-            <div class="overall-progress">
-                Total Training Progress: <span id="total-progress-text">0%</span>
-                <div class="progress-bar-container">
-                    <div id="total-progress-bar" class="progress-bar"></div>
-                </div>
+            <div>
+                <div class="brand-title">Pfibonacci Training</div>
+                <div class="brand-subtitle">Industrial Engineering & Control Systems LMS</div>
             </div>
         </div>
+        <nav class="nav-links">
+            <a href="#" id="nav-home" class="nav-link">Training Home</a>
+            <a href="#" id="nav-courses" class="nav-link">Courses</a>
+            <a href="https://www.pfibonacci.com" class="nav-link back-site-btn">← Back to Pfibonacci</a>
+        </nav>
+    </header>
 
-        <!-- Quiz Screen -->
-        <div id="quiz-screen" class="screen hidden">
-            <div class="quiz-header">
-                <div class="progress-info">
-                    <span id="module-title-display">Module 1</span>
-                    <span id="question-number">Question 1 of 4</span>
-                    <div class="progress-bar-container">
-                        <div id="progress-bar" class="progress-bar"></div>
+    <!-- Main Application Container -->
+    <main class="app-container">
+
+        <!-- 1. TRAINING HOME / COURSE CATALOGUE SCREEN -->
+        <div id="home-screen" class="screen active">
+            <section class="home-hero">
+                <h1>Professional Technical Training Platform</h1>
+                <p>Self-paced engineering education platform for industrial automation, control systems, instrumentation, programmable logic controllers, engineering stations, and operator interfaces (Siemens T2000 / T3000 / S5 / S7 / ES680).</p>
+                
+                <div class="overall-progress-banner">
+                    <div class="progress-stats">
+                        Overall Training Progress: <span id="overall-progress-text">0 / 45 Modules Completed (0%)</span>
+                    </div>
+                    <div class="progress-bar-container-lg">
+                        <div id="overall-progress-fill" class="progress-bar-fill"></div>
                     </div>
                 </div>
-                <div class="timer">
-                    <span id="timer-text">60s</span>
-                    <svg class="timer-svg" viewBox="0 0 40 40">
-                        <circle class="timer-bg" cx="20" cy="20" r="18"></circle>
-                        <circle id="timer-circle" class="timer-progress" cx="20" cy="20" r="18"></circle>
-                    </svg>
-                </div>
-            </div>
+            </section>
 
-            <div class="score-display">Module Score: <span id="current-score">0</span></div>
-
-            <div id="question-container">
-                <h2 id="question-text">Question text?</h2>
-                <div id="answer-buttons" class="answer-grid"></div>
-            </div>
-
-            <div class="quiz-footer">
-                <button id="next-btn" class="btn primary-btn hidden">Next Question</button>
+            <h2 class="section-title">Course Catalogue</h2>
+            <div id="course-catalogue-grid" class="course-grid">
+                <!-- Injected dynamically by script.js -->
             </div>
         </div>
 
-        <!-- Module Results Screen -->
-        <div id="module-results-screen" class="screen hidden">
-            <h1>Module Complete!</h1>
-            <div class="final-score-container">
-                <div class="score-circle">
-                    <span id="mod-score">0</span>
-                    <span class="score-slash">/</span>
-                    <span id="mod-total">0</span>
+        <!-- 2. COURSE DASHBOARD SCREEN -->
+        <div id="dashboard-screen" class="screen">
+            <div style="margin-bottom: 20px;">
+                <button class="btn btn-outline" onclick="renderHome()">← Return to Course Catalogue</button>
+            </div>
+
+            <div class="dashboard-header">
+                <div class="dashboard-title-area">
+                    <span class="module-header-meta">Course Dashboard</span>
+                    <h1 id="dashboard-course-title">Course Title</h1>
+                    <p id="dashboard-course-desc">Course description goes here.</p>
+                </div>
+                <div class="dashboard-summary-card">
+                    <div class="number" id="dashboard-modules-count">0 / 9</div>
+                    <div style="font-size: 0.85rem; color: var(--pfib-text-light); font-weight: 600; text-transform: uppercase;">Modules Completed</div>
+                    <div style="margin-top: 10px; font-weight: 700; color: var(--pfib-accent);" id="dashboard-progress-percent">0%</div>
                 </div>
             </div>
-            <h2 id="mod-message">Good progress.</h2>
-            <div class="button-group">
-                <button id="next-module-btn" class="btn primary-btn">Next Module</button>
-                <button id="back-to-modules-btn" class="btn secondary-btn">Module Selection</button>
+
+            <!-- Optional Track Selector for Course 5 -->
+            <div id="track-selector-area"></div>
+
+            <h2 class="section-title">Course Modules</h2>
+            <div id="module-row-list" class="module-list-container">
+                <!-- Injected dynamically by script.js -->
             </div>
         </div>
 
-        <!-- Final Results Screen -->
-        <div id="final-results-screen" class="screen hidden">
-            <h1>Training Complete</h1>
-            <div class="final-score-container">
-                <div class="score-circle">
-                    <span id="final-score">0</span>
-                    <span class="score-slash">/</span>
-                    <span id="total-questions">0</span>
-                </div>
-                <div id="percentage-text" class="percentage">0%</div>
-            </div>
-            <h2 id="result-message">Ready to start the TXP manual</h2>
-            <button id="restart-btn" class="btn secondary-btn">Restart All Training</button>
-        </div>
-    </div>
+        <!-- 3. MODULE LEARNING PAGE SCREEN -->
+        <div id="learning-screen" class="screen">
+            <div class="learning-layout">
+                <!-- Left Sidebar Navigation -->
+                <aside class="learning-sidebar">
+                    <div style="margin-bottom: 15px;">
+                        <button class="btn btn-outline" style="width: 100%; font-size: 0.85rem; padding: 8px;" onclick="openCourseDashboard(appState.selectedCourseId)">← Course Dashboard</button>
+                    </div>
+                    <h3 id="learning-course-title-display">Course Name</h3>
+                    <ul id="learning-sidebar-list" class="sidebar-nav-list">
+                        <!-- Injected dynamically -->
+                    </ul>
+                </aside>
 
+                <!-- Main Learning Content -->
+                <article class="learning-main-card">
+                    <div class="module-header-meta" id="learning-mod-number-display">Module 1</div>
+                    <h1 id="learning-mod-title-display">Module Title</h1>
+
+                    <div id="learning-content-body" class="learning-content-body">
+                        <!-- Technical manual content injected dynamically -->
+                    </div>
+
+                    <div id="learning-action-footer" class="content-action-footer">
+                        <!-- Navigation buttons injected dynamically -->
+                    </div>
+                </article>
+            </div>
+        </div>
+
+        <!-- 4. QUIZ ASSESSMENT SCREEN -->
+        <div id="quiz-screen" class="screen">
+            <div class="results-card" style="max-width: 850px; text-align: left; padding: 40px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <div>
+                        <span class="module-header-meta" id="quiz-mod-title">Module Assessment</span>
+                        <h2 style="font-size: 1.4rem; color: var(--pfib-blue);" id="quiz-q-counter">Question 1 of 4</h2>
+                    </div>
+                    <button class="btn btn-outline" style="font-size: 0.85rem; padding: 8px 16px;" onclick="openCourseDashboard(appState.selectedCourseId)">Exit to Dashboard</button>
+                </div>
+
+                <div class="mini-progress-bar" style="margin-bottom: 30px;">
+                    <div id="quiz-progress-fill" class="mini-progress-fill"></div>
+                </div>
+
+                <div class="quiz-wrapper">
+                    <h3 id="quiz-question-text" class="quiz-question-title">Question text goes here?</h3>
+                    <div id="quiz-options-container" class="quiz-options-grid"></div>
+
+                    <div id="quiz-feedback-box" class="quiz-explanation-box" style="display: none;"></div>
+
+                    <div style="text-align: right; margin-top: 25px;">
+                        <button id="quiz-next-btn" class="btn btn-primary" style="display: none;">Next Question →</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. MODULE RESULTS SCREEN -->
+        <div id="result-screen" class="screen">
+            <div class="results-card">
+                <div class="results-score-circle">
+                    <span class="score-val" id="result-score-val">0/0</span>
+                    <span class="score-label">Score</span>
+                </div>
+                <div class="results-percentage" id="result-percentage">0%</div>
+                <h1 id="result-mod-title">Module Complete</h1>
+                <p id="result-message-text">Congratulations on completing the module assessment.</p>
+                
+                <div id="result-action-buttons" class="results-actions">
+                    <!-- Action buttons injected dynamically -->
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Professional Footer -->
     <footer class="main-footer">
-        software developed by Nkululeko Dlamini(0765162191)
+        <p><strong>Pfibonacci Training</strong> — Industrial Automation & Control Systems Engineering</p>
+        <p>Pfibonacci (Pty) Ltd | Engineering the Future</p>
+        <p>Developed by Nkululeko Dlamini</p>
+        <p style="margin-top: 10px;"><a href="https://www.pfibonacci.com">Return to Main Pfibonacci Website</a></p>
     </footer>
-
-    <audio id="correct-sound" src="https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3" preload="auto"></audio>
-    <audio id="wrong-sound" src="https://assets.mixkit.co/active_storage/sfx/2001/2001-preview.mp3" preload="auto"></audio>
 
     <script src="script.js"></script>
 </body>
