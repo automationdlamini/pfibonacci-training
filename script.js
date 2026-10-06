@@ -1,5 +1,4 @@
-// jshint esversion: 6
-// jshint esversion: 11
+
 /**
  * Pfibonacci Industrial Training Platform & LMS Engine
  * Supports 5 core technical courses, modular learning pages, technical diagrams,
