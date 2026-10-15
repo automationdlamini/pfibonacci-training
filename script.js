@@ -43,42 +43,42 @@ const coursesData = [
                     }
                 ],
                 quiz: [
-                    { 
-                        question: "What is a computer system?", 
+                    {
+                        question: "What is a computer system?",
                         answers: [
-                            { text: "Only hardware components", correct: false }, 
-                            { text: "Hardware and software working together", correct: true }, 
-                            { text: "Only operating system software", correct: false }, 
+                            { text: "Only hardware components", correct: false },
+                            { text: "Hardware and software working together", correct: true },
+                            { text: "Only operating system software", correct: false },
                             { text: "Only user terminals", correct: false }
                         ],
                         explanation: "A computer system combines hardware, software, data, and operators to execute computational and control tasks."
                     },
-                    { 
-                        question: "Which component is NOT part of a fundamental computer system?", 
+                    {
+                        question: "Which component is NOT part of a fundamental computer system?",
                         answers: [
-                            { text: "Hardware", correct: false }, 
-                            { text: "Software", correct: false }, 
-                            { text: "Data", correct: false }, 
+                            { text: "Hardware", correct: false },
+                            { text: "Software", correct: false },
+                            { text: "Data", correct: false },
                             { text: "Raw ambient electricity", correct: true }
                         ],
                         explanation: "Electricity powers the system, but the core architectural components of a computer system are hardware, software, data, and users."
                     },
-                    { 
-                        question: "What does the Input → Process → Output model represent?", 
+                    {
+                        question: "What does the Input → Process → Output model represent?",
                         answers: [
-                            { text: "The fundamental flow of information, data capture, and execution in a system", correct: true }, 
-                            { text: "Network cabling standards", correct: false }, 
-                            { text: "Database indexing methods", correct: false }, 
+                            { text: "The fundamental flow of information, data capture, and execution in a system", correct: true },
+                            { text: "Network cabling standards", correct: false },
+                            { text: "Database indexing methods", correct: false },
                             { text: "User authentication protocols", correct: false }
                         ],
                         explanation: "I-P-O is the standard engineering model describing how inputs are transformed into actionable outputs."
                     },
-                    { 
-                        question: "In an industrial control system, who or what typically provides the primary control input?", 
+                    {
+                        question: "In an industrial control system, who or what typically provides the primary control input?",
                         answers: [
-                            { text: "Only the database server", correct: false }, 
-                            { text: "Field instrumentation, sensors, and operators", correct: true }, 
-                            { text: "The cooling fans", correct: false }, 
+                            { text: "Only the database server", correct: false },
+                            { text: "Field instrumentation, sensors, and operators", correct: true },
+                            { text: "The cooling fans", correct: false },
                             { text: "The system logs", correct: false }
                         ],
                         explanation: "Control inputs originate from field sensors, instrumentation, and operator commands."
@@ -476,6 +476,36 @@ function saveProgress() {
 }
 
 function initEventListeners() {
+    const menuButton = document.querySelector('.nav-toggle');
+    const navigation = document.getElementById('primary-navigation');
+    const closeMenu = () => {
+        menuButton.setAttribute('aria-expanded', 'false');
+        menuButton.setAttribute('aria-label', 'Open navigation menu');
+        navigation.classList.remove('is-open');
+    };
+
+    menuButton.onclick = () => {
+        const isOpen = menuButton.getAttribute('aria-expanded') === 'true';
+        menuButton.setAttribute('aria-expanded', String(!isOpen));
+        menuButton.setAttribute('aria-label', isOpen ? 'Open navigation menu' : 'Close navigation menu');
+        navigation.classList.toggle('is-open', !isOpen);
+    };
+
+    navigation.addEventListener('click', (e) => {
+        if (e.target.closest('.nav-link')) closeMenu();
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeMenu();
+            menuButton.focus();
+        }
+    });
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) closeMenu();
+    });
+
     // Global nav links
     document.getElementById('nav-home').onclick = (e) => { e.preventDefault(); showScreen('home-screen'); renderHome(); };
     document.getElementById('nav-courses').onclick = (e) => { e.preventDefault(); showScreen('home-screen'); renderHome(); };
@@ -773,7 +803,7 @@ function renderQuizQuestion() {
 
     const optionsContainer = document.getElementById('quiz-options-container');
     optionsContainer.innerHTML = '';
-    
+
     document.getElementById('quiz-feedback-box').innerHTML = '';
     document.getElementById('quiz-feedback-box').style.display = 'none';
     document.getElementById('quiz-next-btn').style.display = 'none';
@@ -817,7 +847,7 @@ function selectQuizAnswer(selectedIndex, isCorrect, explanation) {
 
     const nextBtn = document.getElementById('quiz-next-btn');
     nextBtn.style.display = 'inline-flex';
-    
+
     const isLastQuestion = appState.currentQuizQuestionIndex >= mod.quiz.length - 1;
     nextBtn.innerText = isLastQuestion ? 'Complete Module Assessment →' : 'Next Question →';
     nextBtn.onclick = () => {
@@ -858,7 +888,7 @@ function finishModuleAssessment() {
     document.getElementById('result-mod-title').innerText = mod.title;
     document.getElementById('result-score-val').innerText = `${score}/${totalQ}`;
     document.getElementById('result-percentage').innerText = `${percent}% Score`;
-    
+
     const msgEl = document.getElementById('result-message-text');
     if (passed) {
         msgEl.innerText = "Congratulations! You have successfully passed the module assessment.";
@@ -869,7 +899,7 @@ function finishModuleAssessment() {
     }
 
     const actionsEl = document.getElementById('result-action-buttons');
-    
+
     // Check if next module exists
     const hasNext = appState.currentModuleIndex < mods.length - 1;
 
